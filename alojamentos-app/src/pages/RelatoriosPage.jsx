@@ -45,7 +45,6 @@ const RelatoriosPage = () => {
         saveAs(data, "relatorio_ocupacao.xlsx");
     };
     
-    // Agrupa estadias por alojamento
     const estadiasAgrupadas = estadias.reduce((acc, e) => {
         const nomeAlojamento = e.alojamento.nome;
         if (!acc[nomeAlojamento]) {

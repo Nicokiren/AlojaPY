@@ -3,12 +3,12 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f8f9fa;
+  background-color: var(--cor-fundo);
 }
 .login-box {
   padding: 3rem;
   background: white;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  box-shadow: var(--sombra-media);
   border-radius: 12px;
   width: 100%;
   max-width: 450px;
@@ -30,11 +30,19 @@
     padding: 1rem;
     border: 1px solid #ccc;
     border-radius: 6px;
+    font-size: 1rem;
 }
 .login-form button {
     padding: 1rem;
-    background-color: #007bff;
+    background-color: var(--cor-primaria);
     color: white;
     font-size: 1.1rem;
     margin-top: 1rem;
+}
+.login-form button:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+}
+.error-message {
+    color: var(--cor-perigo);
 }

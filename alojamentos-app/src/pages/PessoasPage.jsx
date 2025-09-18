@@ -10,7 +10,7 @@ function PessoasPage() {
 
     const fetchPessoas = async () => {
         try {
-            const response = await api.get('/api/pessoas');
+            const response = await api.get('/api/pessoas/');
             setPessoas(response.data);
         } catch (err) {
             console.error("Erro ao buscar pessoas", err);
@@ -65,7 +65,7 @@ function PessoasPage() {
                         <input name="telefone" value={formData.telefone} onChange={handleInputChange} placeholder="Telefone" />
                         <div className="form-actions">
                             <button type="submit">{isEditing ? 'Salvar Alterações' : 'Adicionar Pessoa'}</button>
-                            {isEditing && <button type="button" className="cancel-btn" onClick={resetForm}>Cancelar Edição</button>}
+                            {isEditing && <button type="button" className="cancel-btn" onClick={resetForm}>Cancelar</button>}
                         </div>
                         {error && <p className="error-message">{error}</p>}
                     </form>

@@ -1,23 +1,27 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../hooks/useAuth.jsx';
 import './LoginPage.css';
 
 function LoginPage() {
     const [username, setUsername] = useState('admin');
     const [password, setPassword] = useState('senha123');
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
     const { login } = useAuth();
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
+        setLoading(true);
         try {
             await login(username, password);
             navigate('/');
         } catch (err) {
             setError('Usuário ou senha inválidos.');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -42,7 +46,9 @@ function LoginPage() {
                         required
                     />
                     {error && <p className="error-message">{error}</p>}
-                    <button type="submit">Entrar</button>
+                    <button type="submit" disabled={loading}>
+                        {loading ? 'Entrando...' : 'Entrar'}
+                    </button>
                 </form>
             </div>
         </div>

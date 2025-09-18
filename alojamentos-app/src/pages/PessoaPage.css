@@ -1,17 +1,19 @@
 .pessoas-container {
     padding: 1rem;
 }
+.pessoas-container h1 {
+    margin-bottom: 1.5rem;
+}
 .pessoas-content {
     display: grid;
     grid-template-columns: 1fr 2fr;
     gap: 2rem;
-    margin-top: 1.5rem;
 }
 .form-section, .list-section {
     background: white;
     padding: 2rem;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: var(--sombra-media);
 }
 .pessoa-form {
     display: flex;
@@ -22,6 +24,7 @@
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 6px;
+    font-size: 1rem;
 }
 .form-actions {
     display: flex;
@@ -50,7 +53,9 @@
 }
 .list-header {
     font-weight: 700;
-    color: #888;
+    color: #6c757d;
+    text-transform: uppercase;
+    font-size: 0.9rem;
 }
 .edit-btn {
     background-color: var(--cor-aviso);
@@ -61,4 +66,5 @@
 .error-message {
     color: var(--cor-perigo);
     text-align: center;
+    margin-top: 1rem;
 }

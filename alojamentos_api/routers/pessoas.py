@@ -6,7 +6,6 @@ from pydantic import BaseModel
 from typing import List, Optional
 
 # Schemas (moldes) para validação de dados
-# Corrigido para usar 'lotacao' e estar em conformidade com o modelo do banco de dados
 class PessoaSchema(BaseModel):
     id: int
     nome: str
@@ -28,7 +27,7 @@ router = APIRouter(
     tags=["pessoas"]
 )
 
-# CORREÇÃO: Adicionada a rota sem a barra para evitar o redirecionamento
+# --- CORREÇÃO APLICADA AQUI TAMBÉM ---
 @router.get("", include_in_schema=False, response_model=List[PessoaSchema])
 @router.get("/", response_model=List[PessoaSchema])
 def get_pessoas(db: Session = Depends(get_db)):
@@ -56,7 +55,6 @@ def create_pessoa(pessoa: PessoaCreate, db: Session = Depends(get_db)):
     if db_pessoa:
         raise HTTPException(status_code=409, detail="Já existe uma pessoa cadastrada com este CPF.")
     
-    # O objeto é criado usando os nomes corretos
     new_pessoa = Pessoa(**pessoa.dict())
     db.add(new_pessoa)
     db.commit()

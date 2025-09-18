@@ -2,7 +2,7 @@
     background-color: white;
     padding: 2rem;
     border-radius: 12px;
-    box-shadow: var(--sombra);
+    box-shadow: var(--sombra-media);
 }
 .filtros-container {
     display: flex;
@@ -16,10 +16,15 @@
     padding: 10px;
     border-radius: 6px;
     border: 1px solid #ccc;
+    font-size: 1rem;
 }
 .filtros-container button {
     background-color: var(--cor-primaria);
     color: white;
+}
+.filtros-container button:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
 }
 .resultado-relatorio {
     margin-top: 2rem;
@@ -29,6 +34,7 @@
 }
 .relatorio-grupo h3 {
     margin-bottom: 1rem;
+    color: var(--cor-primaria);
 }
 .relatorio-tabela {
     width: 100%;

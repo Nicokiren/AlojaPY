@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import api from '../services/api';
 import './AlojamentosPage.css';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
-// --- Componente Detalhe (Painel Lateral) ---
 const AlojamentoDetail = ({ alojamento, pessoas, onActionSuccess, onClose }) => {
     const [pessoaId, setPessoaId] = useState('');
     const [dataSaida, setDataSaida] = useState(null);
@@ -40,17 +39,17 @@ const AlojamentoDetail = ({ alojamento, pessoas, onActionSuccess, onClose }) => 
     };
 
     const pessoasDisponiveis = pessoas.filter(p => 
-        !p.estadias.some(e => e.data_saida === null || new Date(e.data_saida) > new Date())
+        !p.estadias || !p.estadias.some(e => e.data_saida === null || new Date(e.data_saida) > new Date())
     );
 
-    const estadiasAtivas = alojamento.estadias.filter(e => e.data_saida === null || new Date(e.data_saida) > new Date());
+    const estadiasAtivas = alojamento.estadias ? alojamento.estadias.filter(e => e.data_saida === null || new Date(e.data_saida) > new Date()) : [];
     const vagas = alojamento.capacidade - estadiasAtivas.length;
 
     return (
         <div className="detail-view">
             <div className="detail-header">
                 <h2>{alojamento.nome}</h2>
-                <button className="close-btn" onClick={onClose}>X</button>
+                <button className="close-btn" onClick={onClose}>&times;</button>
             </div>
             
             <div className="detail-section">
@@ -58,7 +57,7 @@ const AlojamentoDetail = ({ alojamento, pessoas, onActionSuccess, onClose }) => 
                 <ul className="hospedes-detail-list">
                     {estadiasAtivas.map(e => (
                         <li key={e.id}>
-                            <span className="hospede-nome">{e.pessoa.nome}</span>
+                            <span className="hospede-nome">{e.pessoa?.nome || 'Pessoa não encontrada'}</span>
                             <div className="datas-container">
                                 <DatePicker 
                                     selected={new Date(e.data_entrada)}
@@ -102,18 +101,17 @@ const AlojamentoDetail = ({ alojamento, pessoas, onActionSuccess, onClose }) => 
     );
 };
 
-// --- Componente Principal da Página ---
 const AlojamentosPage = () => {
     const [alojamentos, setAlojamentos] = useState([]);
     const [pessoas, setPessoas] = useState([]);
     const [selectedAlojamento, setSelectedAlojamento] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    const fetchData = async () => {
+    const fetchData = useCallback(async () => {
         try {
             const [alojRes, pessRes] = await Promise.all([
-                api.get('/api/alojamentos'),
-                api.get('/api/pessoas')
+                api.get('/api/alojamentos/'),
+                api.get('/api/pessoas/')
             ]);
             setAlojamentos(alojRes.data);
             setPessoas(pessRes.data);
@@ -127,18 +125,21 @@ const AlojamentosPage = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [selectedAlojamento]);
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [fetchData]);
 
     if (loading) return <div className="loading-container">Carregando Alojamentos...</div>;
 
     const femininos = alojamentos.filter(a => a.nome.startsWith('AS'));
     const masculinos = alojamentos.filter(a => a.nome.startsWith('B'));
 
-    const getOcupacao = (aloj) => aloj.estadias.filter(e => e.data_saida === null || new Date(e.data_saida) > new Date()).length;
+    const getOcupacao = (aloj) => {
+        if (!aloj.estadias) return 0;
+        return aloj.estadias.filter(e => e.data_saida === null || new Date(e.data_saida) > new Date()).length;
+    }
 
     const renderCard = (a) => {
         const ocupacao = getOcupacao(a);

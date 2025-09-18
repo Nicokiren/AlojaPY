@@ -19,6 +19,7 @@ function App() {
                 <Route path="/" element={<PrivateRoute><AlojamentosPage /></PrivateRoute>} />
                 <Route path="/pessoas" element={<PrivateRoute><PessoasPage /></PrivateRoute>} />
                 <Route path="/relatorios" element={<PrivateRoute><RelatoriosPage /></PrivateRoute>} />
+                <Route path="*" element={<Navigate to="/" />} />
             </Routes>
         </Router>
     );
