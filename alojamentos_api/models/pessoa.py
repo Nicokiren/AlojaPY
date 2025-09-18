@@ -8,7 +8,7 @@ class Pessoa(Base):
     id = Column(Integer, primary_key=True, index=True)
     nome = Column(String(100), nullable=False)
     cpf = Column(String(14), unique=True, index=True, nullable=False)
-    cargo = Column(String(50), nullable=True)
+    lotacao = Column(String(100), nullable=True) # Corrigido de 'cargo'
     telefone = Column(String(20), nullable=True)
 
     estadias = relationship("Estadia", back_populates="pessoa")

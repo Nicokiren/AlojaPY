@@ -1,0 +1,64 @@
+.pessoas-container {
+    padding: 1rem;
+}
+.pessoas-content {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+.form-section, .list-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+.pessoa-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.pessoa-form input {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+.form-actions button {
+    flex-grow: 1;
+    padding: 12px;
+    font-size: 1rem;
+    color: white;
+    background-color: var(--cor-primaria);
+}
+.form-actions .cancel-btn {
+    background-color: #6c757d;
+}
+.pessoas-list {
+    list-style: none;
+}
+.pessoas-list li {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 1.5fr 1fr;
+    padding: 1rem;
+    border-bottom: 1px solid var(--cor-cinza-claro);
+    align-items: center;
+}
+.list-header {
+    font-weight: 700;
+    color: #888;
+}
+.edit-btn {
+    background-color: var(--cor-aviso);
+    color: var(--cor-texto);
+    padding: 6px 12px;
+    font-size: 0.9rem;
+}
+.error-message {
+    color: var(--cor-perigo);
+    text-align: center;
+}
